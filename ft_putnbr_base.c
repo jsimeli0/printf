@@ -1,21 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putchar_fd.c                                    :+:    :+:            */
+/*   ft_putnbr_base.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/09 16:10:22 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/12/01 17:00:55 by jsimelio      ########   odam.nl         */
+/*   Created: 2020/08/25 16:32:36 by jsimelio      #+#    #+#                 */
+/*   Updated: 2020/08/25 20:48:02 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <unistd.h>
 
-int		ft_putchar_fd(char c, int fd)
+void	ft_putchar(char c)
 {
-	ssize_t i;
+	write(1, &c, 1);
+}
 
-	i = write(fd, &c, sizeof(char));
+int		ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
 	return (i);
+}
+
+void	ft_putnbr_base(int nbr, char *base)
+{
+	int baselen;
+
+	baselen = ft_strlen(base);
+	if (nbr > baselen)
+	{
+		ft_putnbr_base((nbr / baselen), base);
+		ft_putchar((nbr % baselen) + '0');
+	}
+	else
+		ft_putchar(base[nbr]);
 }

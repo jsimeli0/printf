@@ -6,43 +6,90 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/30 18:47:12 by jsimelio      ########   odam.nl         */
+/*   Updated: 2020/12/01 19:47:41 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_putchar_fd.c"
+#include "ft_putnbr_fd.c"
+#include "ft_putstr_fd.c"
 
-int		main(void)
+int			main(void)
 {
-	int		num = 300;
-	int		num2 = 500;
-	char	*str = "Hello/n";
-	char	*str2 = "Bye";
+	int		num = -300;
+	// int		num2 = 500;
+	char	*str = "Hello";
+	// char	*str2 = "Bye";
+	char 	c = '9';
 
-	ft_printf("Hello! %c?");
+	ft_printf("int: %d, string: %s, char: %c, unsigned int: %u", num, str, c, num);
 	return (0);
 }
 
-void	ft_parse(const char **str, va_list ap)
+static void	ft_parse_int(va_list *ap)
 {
-	**str++;
-	if (**str == 's')
+		int	n;
 
+		n = va_arg (*ap, int);
+		ft_putnbr_fd(n, 1);
 }
 
-int		ft_printf(const char *str, ...)
+// This is still printing as a negative... why?
+static void	ft_parse_uns(va_list *ap)
+{
+		unsigned int	n;
+
+		n = va_arg (*ap, int);
+		ft_putnbr_fd(n, 1);
+}
+
+static void	ft_parse_str(va_list *ap)
+{
+		char *str;
+
+		str = va_arg (*ap, char*);
+		ft_putstr_fd(str, 1);
+}
+
+static void	ft_parse_char(va_list *ap)
+{
+		char c;
+
+		c = va_arg (*ap, int);
+		ft_putchar_fd(c, 1);
+}
+
+static void	ft_parse(const char **str, va_list *ap)
+{
+	(*str)++;
+	if (**str == 's')
+		ft_parse_str(ap);
+	else if (**str == 'd' || **str == 'i')
+		ft_parse_int(ap);
+	else if (**str == 'c')
+		ft_parse_char(ap);
+	else if (**str == 'u')
+		ft_parse_uns(ap);
+	else if (**str == '%')
+		ft_putchar_fd('%', 1);
+	(*str)++;
+}
+
+int			ft_printf(const char *str, ...)
 {
 	va_list	ap;
-	int		i;
 
 	va_start(ap, str);
 	while (*str)
 	{
 		if (*str == '%')
-			ft_parse(&str, ap);
+			ft_parse(&str, &ap);
 		else
+		{
 			ft_putchar_fd(*str, 1);
-		str++;
+			str++;
+		}
 	}
 	return (0);
 }
