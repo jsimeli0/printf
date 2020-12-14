@@ -6,17 +6,17 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/12/07 18:56:38 by jsimelio      ########   odam.nl         */
+/*   Updated: 2020/12/07 20:31:07 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "./libft/ft_putchar_fd.c"
-#include "./libft/ft_putint_fd.c"
-#include "./libft/ft_putstr_fd.c"
-#include "./libft/ft_putuint_fd.c"
-#include "./libft/ft_putint_base_fd.c"
-#include "./libft/ft_strlen.c"
+#include "ft_putchar_fd.c"
+#include "ft_putint_fd.c"
+#include "ft_putstr_fd.c"
+#include "ft_putuint_fd.c"
+#include "ft_putint_base_fd.c"
+#include "ft_strlen.c"
 
 int			main(void)
 {
@@ -75,6 +75,16 @@ static void	ft_parse_hexlow(va_list *ap)
 		ft_putint_base_fd(c, base, 1);
 }
 
+static void	ft_parse_hexlow(va_list *ap)
+{
+		char	*base;
+		int		c;
+
+		base = "0123456789ABCDEF";
+		c = va_arg (*ap, int);
+		ft_putint_base_fd(c, base, 1);
+}
+
 static void	ft_parse(const char **str, va_list *ap)
 {
 	(*str)++;
@@ -88,6 +98,8 @@ static void	ft_parse(const char **str, va_list *ap)
 		ft_parse_uint(ap);
 	else if (**str == 'x')
 		ft_parse_hexlow(ap);
+	else if (**str == 'X')
+		ft_parse_hexup(ap);
 	else if (**str == '%')
 		ft_putchar_fd('%', 1);
 	(*str)++;
