@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/23 22:28:51 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/23 23:47:56 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			main(void)
 	return (0);
 }
 
-void	ft_print_int(va_list ap, t_flags *flags, int *char_count)
+void		ft_print_int(va_list ap, t_flags *flags, int *char_count)
 {
 		int	n;
 
@@ -42,7 +42,7 @@ void	ft_print_int(va_list ap, t_flags *flags, int *char_count)
 }
 
 // This is still printing as a negative sign... why?
-void	ft_print_uint(va_list ap, t_flags *flags, int *char_count)
+void		ft_print_uint(va_list ap, t_flags *flags, int *char_count)
 {
 		unsigned int	n;
 
@@ -50,7 +50,7 @@ void	ft_print_uint(va_list ap, t_flags *flags, int *char_count)
 		ft_putuint_fd(n, 1);
 }
 
-void	ft_print_str(va_list ap, t_flags *flags, int *char_count)
+void		ft_print_str(va_list ap, t_flags *flags, int *char_count)
 {
 		char *str;
 
@@ -58,7 +58,7 @@ void	ft_print_str(va_list ap, t_flags *flags, int *char_count)
 		ft_putstr_fd(str, 1);
 }
 
-void	ft_print_char(va_list ap, t_flags *flags, int *char_count)
+void		ft_print_char(va_list ap, t_flags *flags, int *char_count)
 {
 		char c;
 
@@ -66,7 +66,7 @@ void	ft_print_char(va_list ap, t_flags *flags, int *char_count)
 		ft_putchar_fd(c, 1);
 }
 
-void	ft_print_hexlow(va_list ap, t_flags *flags, int *char_count)
+void		ft_print_hexlow(va_list ap, t_flags *flags, int *char_count)
 {
 		char	*base;
 		int		c;
@@ -76,7 +76,7 @@ void	ft_print_hexlow(va_list ap, t_flags *flags, int *char_count)
 		ft_putint_base_fd(c, base, 1);
 }
 
-void	ft_print_hexup(va_list ap, t_flags *flags, int *char_count)
+void		ft_print_hexup(va_list ap, t_flags *flags, int *char_count)
 {
 		char	*base;
 		int		c;
@@ -93,7 +93,7 @@ void	ft_print_hexup(va_list ap, t_flags *flags, int *char_count)
 // void	ft_parse_float(va_list ap);
 
 
-void	ft_walk(char **parse, int *char_count)
+void		ft_walk(char **parse, int *char_count)
 {
 	while (**parse && **parse != '%')
 	{
@@ -103,7 +103,11 @@ void	ft_walk(char **parse, int *char_count)
 	}
 }
 
-static void	ft_parse_flags(va_list ap, char **parse, t_flags *flags);
+static void	ft_parse_flags(va_list ap, char **parse, t_flags *flags)
+{
+	(*parse++);
+	
+}
 
 static void	ft_modifier(va_list ap, t_flags *flags, int *char_count)
 {
@@ -141,7 +145,6 @@ int			ft_printf(const char *str, ...)
 		ft_walk(&parse, &char_count);
 		if (*parse != '%')
 			break;
-		
 		ft_parse_flags(ap, &parse, &flags);
 		ft_modifier(ap, &flags, char_count);
 	}

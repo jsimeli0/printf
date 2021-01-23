@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 10:34:37 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/25 23:58:14 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/23 23:46:57 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@ static int	ft_sign(const char *str)
 {
 	if (*str == '-')
 		return (-1);
-	return (0);
-}
-
-static int	ft_isspace(char c)
-{
-	if (c == '\t' || c == '\v' || c == '\f'
-		|| c == '\n' || c == '\r' || c == ' ')
-		return (1);
 	return (0);
 }
 
