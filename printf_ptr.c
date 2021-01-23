@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strlen.c                                        :+:    :+:            */
+/*   printf_ptr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/02 16:46:13 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/24 18:44:06 by jsimelio      ########   odam.nl         */
+/*   Created: 2021/01/14 12:52:53 by jsimelio      #+#    #+#                 */
+/*   Updated: 2021/01/14 12:54:25 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-size_t	ft_strlen(const char *s)
+int main(void)
 {
-	size_t i;
+	int a = 42;
 
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	printf("%p\n", &a);
 }
