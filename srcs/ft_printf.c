@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/23 23:47:56 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/25 20:26:59 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,30 +103,59 @@ void		ft_walk(char **parse, int *char_count)
 	}
 }
 
-static void	ft_parse_flags(va_list ap, char **parse, t_flags *flags)
+void		ft_init_flags(t_flags *flags)
 {
-	(*parse++);
-	
+	flags->specifier = 0;
+	flags->width = 0;
+	flags->dash = 0;
+	flags->dot = 0;
+	flags->zero = 0;
+	flags->star = 0;
 }
 
-static void	ft_modifier(va_list ap, t_flags *flags, int *char_count)
+void		ft_parse_flags(va_list ap, char **parse, t_flags *flags)
+{
+	int	width;
+
+	(*parse)++;			// Check if parenthesis is necesary
+	ft_init_flags(flags);
+	if (width = ft_atoi(*parse))
+		flags->width = width;
+	while (ft_isnum(*parse))
+		(*parse++);
+	flags->specifier = *parse;
+	(*parse++);
+}
+
+char		*ft_field(t_flags *flags)
+{
+
+}
+
+void		ft_specifier(va_list ap, t_flags *flags, int *char_count)
 {
 	/* All of these functions' declarations have to be fixed to not include parse */
+	char	*str;
+	char	*str2;
 
-	if (flags->modifier == 's')
-		ft_print_str(ap, flags, char_count);
-	else if (flags->modifier == 'd' || flags->modifier == 'i')
-		ft_print_int(ap, flags, char_count);
-	else if (flags->modifier == 'c')
-		ft_print_char(ap, flags, char_count);
-	else if (flags->modifier == 'u')
-		ft_print_uint(ap, flags, char_count);
-	else if (flags->modifier == 'x')
-		ft_print_hexlow(ap, flags, char_count);
-	else if (flags->modifier == 'X')
-		ft_print_hexup(ap, flags, char_count);
-	else if (flags->modifier == '%')
-		ft_putchar_fd('%', 1);
+	str = ft_field(flags);		// Corner case where you get spaces before AND after specifier?? Ie "%-5.4d", 123. Output will be "0123 ""
+	str = "0123";
+	if (flags->specifier == 's')
+		str2 = ft_print_str(ap, flags, char_count);	// Rewrite this function 
+	else if (flags->specifier == 'd' || flags->specifier == 'i')
+		str2 = ft_print_int(ap, flags, char_count);
+	else if (flags->specifier == 'c')				// Rewrite this function 
+		str2 = ft_print_char(ap, flags, char_count);
+	else if (flags->specifier == 'u')				// Rewrite this function 
+		str2 = ft_print_uint(ap, flags, char_count);
+	else if (flags->specifier == 'x')				// Rewrite this function 
+		str2 = ft_print_hexlow(ap, flags, char_count);
+	else if (flags->specifier == 'X')				// Rewrite this function 
+		str2 = ft_print_hexup(ap, flags, char_count);
+	else if (flags->specifier == '%')				
+		str2 = ft_putchar_fd('%', 1);						// Rewrite this function 
+	
+	ft_paste(str, str2, flags);
 }
 
 int			ft_printf(const char *str, ...)
@@ -146,7 +175,7 @@ int			ft_printf(const char *str, ...)
 		if (*parse != '%')
 			break;
 		ft_parse_flags(ap, &parse, &flags);
-		ft_modifier(ap, &flags, char_count);
+		ft_specifier(ap, &flags, char_count);
 	}
 	va_end(ap);
 	return (char_count);
