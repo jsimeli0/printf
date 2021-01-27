@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 10:04:17 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/22 15:48:35 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/25 23:41:48 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,17 @@ int		ft_absolute(int n)
 	return (n);
 }
 
-char	*ft_arrayinit(int uppercase)
-{
-	char	*arr;
-
-	if (uppercase)
-		arr = "0123456789ABCDEF";
-	else
-		arr = "0123456789abcdef";
-	return (arr);
-}
-
 int		ft_size(int n, int base)
 {
 	int size;
 
-	size = 0;
+	size = 1;
 	while (n /= base)
 		size++;
 	return (size);
 }
 
-char	*ft_itoa_base(int n, int base, int uppercase)
+char	*ft_itoa_base(int n, int base)
 {
 	char	*str;
 	char	*arr;
@@ -52,7 +41,7 @@ char	*ft_itoa_base(int n, int base, int uppercase)
 		return (NULL);
 	size = 0;
 	neg = 0;
-	arr = ft_arrayinit(uppercase);
+	arr = "0123456789abcdef";
 	if (n < 0)
 		neg = 1;
 	n = ft_absolute(n);
@@ -74,8 +63,8 @@ char	*ft_itoa_base(int n, int base, int uppercase)
 // 	char	*str;
 // 	int		n;
 
-// 	n = -4039;
-// 	str = ft_itoa_base(n, 8, 1);
+// 	n = -1120;
+// 	str = ft_itoa_base(n, 10);
 // 	printf("%s\n", str);
 // 	free(str);
 // 	return (0);

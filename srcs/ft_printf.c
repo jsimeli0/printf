@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/25 20:26:59 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/27 23:04:38 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,72 +18,158 @@
 #include "../libft/ft_putstr_fd.c"
 #include "../libft/ft_putuint_fd.c"
 #include "../libft/ft_strlen.c"
+#include "../libft/ft_atoi.c"
+#include "../libft/ft_calloc.c"
+#include "../libft/ft_isdigit.c"
+#include "../libft/ft_itoa_base.c"
+#include "../libft/ft_memcpy.c"
+#include "../libft/ft_strjoin.c"
+#include "../libft/ft_toupper.c"
+#include "../libft/ft_bzero.c"
+#include "../libft/ft_isspace.c"
+#include "../libft/ft_strlcat.c"
+#include "../libft/ft_strlcpy.c"
+#include "../libft/ft_memset.c"
+#include "../libft/ft_isalpha.c"
 
 int			main(void)
 {
-	int		num = -1;
-	int		hex = 8123;
-	// int		num2 = 500;
-	char	*str = "Hello";
-	// char	*str2 = "Bye";
-	char 	c = '9';
+	// int		num = -1;
+	// int		hex = 8123;
+	// // int		num2 = 500;
+	// char	*str = "Hello";
+	// // char	*str2 = "Bye";
+	// char 	c = '9';
+	char	*printstr = "%-6.20d a\n";
+	ft_printf("%p", printstr);
+	printf("%p", printstr);
+	// printf(printstr, 100000);
 
-	ft_printf("ft_printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
-	printf("printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
+	// ft_printf("ft_printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
+	// printf("printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
 	return (0);
 }
 
-void		ft_print_int(va_list ap, t_flags *flags, int *char_count)
+char		*ft_precision(char *data, t_flags *flags)
 {
-		int	n;
+	int		strlen;
+	int		i;
+	char	*zeroes;
+	char	*data_return;
 
-		n = va_arg (ap, int);
-		ft_putint_fd(n, 1);
+	strlen = ft_strlen(data);
+	if (flags->precision < strlen)
+		return (data);
+	i = 0;
+	zeroes = ft_calloc(flags->precision - strlen, sizeof(char));  // strlen - flags sometimes evaluates to negative
+	while (i < flags->precision - strlen)
+	{
+		zeroes[i] = '0';
+		i++;
+	}
+	data_return = ft_strjoin(zeroes, data);
+	free(data);
+	return (data_return);
+}
+char		*ft_save_ptr(va_list ap, t_flags *flags)
+{
+	int				n;
+	char			*data;
+
+	n = va_arg (ap, int);
+	n = &n;
+	data = ft_itoa_base(n, 16);
+	data = ft_precision(data, flags);
+	return (data);
+}
+
+char		*ft_save_int(va_list ap, t_flags *flags)
+{
+	int				n;
+	char			*data;
+
+	n = va_arg (ap, int);
+	data = ft_itoa_base(n, 10);
+	data = ft_precision(data, flags);
+	return (data);
 }
 
 // This is still printing as a negative sign... why?
-void		ft_print_uint(va_list ap, t_flags *flags, int *char_count)
+char		*ft_save_uint(va_list ap, t_flags *flags)
 {
-		unsigned int	n;
+	unsigned int	n;
+	char			*data;
 
-		n = va_arg (ap, unsigned int);
-		ft_putuint_fd(n, 1);
+	n = va_arg (ap, unsigned int);
+	data = ft_itoa_base(n, 10);
+	data = ft_precision(data, flags);
+	return (data);
 }
 
-void		ft_print_str(va_list ap, t_flags *flags, int *char_count)
+char		*ft_save_hexlow(va_list ap, t_flags *flags)
 {
-		char *str;
+	int		n;
+	char	*data;
 
-		str = va_arg (ap, char*);
-		ft_putstr_fd(str, 1);
+	n = va_arg (ap, int);
+	data = ft_itoa_base(n, 16);
+	data = ft_precision(data, flags);
+	return (data);
 }
 
-void		ft_print_char(va_list ap, t_flags *flags, int *char_count)
+char		*ft_save_hexup(va_list ap, t_flags *flags)
 {
-		char c;
+	int		n;
+	char	*data;
+	int		i;
+	int		strlen;
 
-		c = va_arg (ap, int);
-		ft_putchar_fd(c, 1);
+	n = va_arg (ap, int);
+	data = ft_itoa_base(n, 16);
+	strlen = ft_strlen(data);
+	i = 0;
+	while (i < strlen)
+	{
+		data[i] = ft_toupper(data[i]);
+		i++;
+	}
+	data = ft_precision(data, flags);
+	return (data);
 }
 
-void		ft_print_hexlow(va_list ap, t_flags *flags, int *char_count)
+char		*ft_save_str(va_list ap, t_flags *flags)
 {
-		char	*base;
-		int		c;
+	char	*data_temp;
+	char	*data;
+	int		strlen;
+	int		i;
 
-		base = "0123456789abcdef";
-		c = va_arg (ap, int);
-		ft_putint_base_fd(c, base, 1);
+	data_temp = va_arg (ap, char*);
+	strlen = ft_strlen(data_temp);
+	data = ft_calloc(strlen + 1, sizeof(char));
+	i = 0;
+	while (i < strlen)
+	{
+		data[i] = data_temp[i];
+		i++;
+	}
+	data = ft_precision(data, flags);
+	return (data);
 }
 
-void		ft_print_hexup(va_list ap, t_flags *flags, int *char_count)
+char		*ft_save_char(va_list ap, t_flags *flags)
 {
-		char	*base;
-		int		c;
+	char 	c;
+	char	*data;
 
-		base = "0123456789ABCDEF";
-		c = va_arg (ap, int);
-		ft_putint_base_fd(c, base, 1);
+	if (flags->specifier == '%')
+		c = '%';
+	else
+		c = va_arg(ap, int);
+	data = ft_calloc(2 , sizeof(char));
+	data[0] = c;
+	data = ft_precision(data, flags);
+	return (data);
 }
 
 /* To be implemented */
@@ -92,8 +178,7 @@ void		ft_print_hexup(va_list ap, t_flags *flags, int *char_count)
 // Floating point only for bonus
 // void	ft_parse_float(va_list ap);
 
-
-void		ft_walk(char **parse, int *char_count)
+void		ft_walk(char **parse, size_t *char_count)
 {
 	while (**parse && **parse != '%')
 	{
@@ -108,54 +193,116 @@ void		ft_init_flags(t_flags *flags)
 	flags->specifier = 0;
 	flags->width = 0;
 	flags->dash = 0;
-	flags->dot = 0;
+	flags->precision = 0;
 	flags->zero = 0;
 	flags->star = 0;
 }
 
-void		ft_parse_flags(va_list ap, char **parse, t_flags *flags)
+void		ft_parse_flags(char **parse, t_flags *flags)
 {
 	int	width;
 
 	(*parse)++;			// Check if parenthesis is necesary
 	ft_init_flags(flags);
-	if (width = ft_atoi(*parse))
-		flags->width = width;
-	while (ft_isnum(*parse))
-		(*parse++);
-	flags->specifier = *parse;
-	(*parse++);
+	while (!ft_isalpha(**parse) && **parse != '.')
+	{
+		if (**parse == '0' && !flags->dash)
+		{
+			flags->zero = 1;
+			(*parse)++;
+		}
+		if (**parse == '-')
+		{
+			flags->dash = 1;
+			flags->zero = 0;
+			(*parse)++;
+		}
+		if ((width = ft_atoi(*parse)))
+			flags->width = width;
+		while (ft_isdigit(**parse))
+			(*parse)++;
+	}
+	if (**parse == '.')
+	{
+		(*parse)++;
+		flags->precision = ft_atoi(*parse);
+		while (ft_isdigit(**parse))
+			(*parse)++;
+	}
+	flags->specifier = **parse;	//This step will always be last
+	if (flags->width < flags->precision)
+		flags->width = 0;
+	(*parse)++;
 }
 
 char		*ft_field(t_flags *flags)
 {
+	char	*str;
+	char	c;
+	int		i;
 
+	str = ft_calloc(flags->width + 1, sizeof(char));
+	c = ' ';
+	if (flags->zero)
+		c = '0';
+	i = 0;
+	while (i < flags->width)
+	{
+		str[i] = c;
+		i++;
+	}
+	return (str);
 }
 
-void		ft_specifier(va_list ap, t_flags *flags, int *char_count)
+char		*ft_data(va_list ap, t_flags *flags)
+{
+	char	*data;
+
+	data = NULL;
+	if (flags->specifier == 's')
+		data = ft_save_str(ap, flags);				// Rewrite this function 
+	else if (flags->specifier == 'd' || flags->specifier == 'i')
+		data = ft_save_int(ap, flags);
+	else if (flags->specifier == 'c' || flags->specifier == '%')				// Rewrite this function 
+		data = ft_save_char(ap, flags);
+	else if (flags->specifier == 'p')				// Rewrite this function 
+		data = ft_save_ptr(ap, flags);
+	else if (flags->specifier == 'u')				// Rewrite this function 
+		data = ft_save_uint(ap, flags);
+	else if (flags->specifier == 'x')				// Rewrite this function 
+		data = ft_save_hexlow(ap, flags);
+	else if (flags->specifier == 'X')				// Rewrite this function 
+		data = ft_save_hexup(ap, flags);
+	return (data);
+}
+
+void		ft_specifier(va_list ap, t_flags *flags, size_t *char_count)
 {
 	/* All of these functions' declarations have to be fixed to not include parse */
-	char	*str;
-	char	*str2;
+	char	*field;
+	char	*data;
+	int		field_len;
+	int		data_len;
+	int		offset;
 
-	str = ft_field(flags);		// Corner case where you get spaces before AND after specifier?? Ie "%-5.4d", 123. Output will be "0123 ""
-	str = "0123";
-	if (flags->specifier == 's')
-		str2 = ft_print_str(ap, flags, char_count);	// Rewrite this function 
-	else if (flags->specifier == 'd' || flags->specifier == 'i')
-		str2 = ft_print_int(ap, flags, char_count);
-	else if (flags->specifier == 'c')				// Rewrite this function 
-		str2 = ft_print_char(ap, flags, char_count);
-	else if (flags->specifier == 'u')				// Rewrite this function 
-		str2 = ft_print_uint(ap, flags, char_count);
-	else if (flags->specifier == 'x')				// Rewrite this function 
-		str2 = ft_print_hexlow(ap, flags, char_count);
-	else if (flags->specifier == 'X')				// Rewrite this function 
-		str2 = ft_print_hexup(ap, flags, char_count);
-	else if (flags->specifier == '%')				
-		str2 = ft_putchar_fd('%', 1);						// Rewrite this function 
-	
-	ft_paste(str, str2, flags);
+	field = ft_field(flags);		// Corner case where you get spaces before AND after specifier?? Ie "%-5.4d", 123. Output will be "0123 ""
+	field_len = ft_strlen(field);
+	data = ft_data(ap, flags);			// SEGFAULT
+	data_len = ft_strlen(data);
+	offset = field_len - data_len;
+	if (offset < 0)
+		ft_putstr_fd(data, 0);
+	else
+	{
+		if (!flags->dash)
+			ft_memcpy(field + offset, data, data_len);
+		else
+			ft_memcpy(field, data, data_len);
+	}
+	char_count += ft_strlen(field);
+	ft_putstr_fd(field, 0);
+	free(field);
+	free(data);
 }
 
 int			ft_printf(const char *str, ...)
@@ -168,14 +315,13 @@ int			ft_printf(const char *str, ...)
 	char_count = 0;
 	parse = (char*)str;
 	va_start(ap, str);
-	// ft_walk((char*)str, ap, &char_count);
 	while (*parse)
 	{
 		ft_walk(&parse, &char_count);
 		if (*parse != '%')
 			break;
-		ft_parse_flags(ap, &parse, &flags);
-		ft_specifier(ap, &flags, char_count);
+		ft_parse_flags(&parse, &flags);
+		ft_specifier(ap, &flags, &char_count);
 	}
 	va_end(ap);
 	return (char_count);
