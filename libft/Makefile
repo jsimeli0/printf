@@ -6,7 +6,7 @@
 #    By: jsimelio <jsimelio@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/23 00:04:55 by jsimelio      #+#    #+#                  #
-#    Updated: 2020/11/23 00:05:00 by jsimelio      ########   odam.nl          #
+#    Updated: 2021/01/28 15:01:43 by jsimelio      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ REG_SRCS = 			ft_atoi.c \
 					ft_isascii.c \
 					ft_isdigit.c \
 					ft_isprint.c \
+					ft_isspace.c \
 					ft_itoa.c \
+					ft_itoa_base.c \
 					ft_memccpy.c \
 					ft_memchr.c \
 					ft_memcmp.c \

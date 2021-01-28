@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 17:00:11 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/26 13:53:50 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/28 15:00:35 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <stdlib.h>
 # include <stdarg.h>
 /* Delete these includes before submitting */
-# include <unistd.h>
-# include <stdio.h>
+// # include <unistd.h>
+// # include <stdio.h>
 
 typedef struct	s_flags
 {
@@ -29,6 +29,18 @@ typedef struct	s_flags
 	int			star;			// The argument list supplies the width specifier, which must precede the actual argument being formatted
 }				t_flags;
 
-
-int		ft_printf(const char *str, ...);
+char			*ft_precision(char *data, t_flags *flags);
+char			*ft_save_int(va_list ap, t_flags *flags);
+char			*ft_save_uint(va_list ap, t_flags *flags);
+char			*ft_save_ptr(va_list ap, t_flags *flags);
+char			*ft_save_hex(va_list ap, t_flags *flags);
+char			*ft_save_str(va_list ap, t_flags *flags);
+char			*ft_save_char(va_list ap, t_flags *flags);
+void			ft_walk(char **parse, size_t *char_count);
+void			ft_init_flags(t_flags *flags);
+void			ft_parse_flags(char **parse, t_flags *flags);
+char			*ft_field(t_flags *flags);
+char			*ft_data(va_list ap, t_flags *flags);
+void			ft_specifier(va_list ap, t_flags *flags, size_t *char_count);
+int				ft_printf(const char *str, ...);
 #endif

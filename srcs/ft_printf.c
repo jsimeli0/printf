@@ -6,49 +6,51 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/27 23:04:38 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/28 14:47:31 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 #include "../libft/libft.h"
-#include "../libft/ft_putchar_fd.c"
-#include "../libft/ft_putint_fd.c"
-#include "../libft/ft_putint_base_fd.c"
-#include "../libft/ft_putstr_fd.c"
-#include "../libft/ft_putuint_fd.c"
-#include "../libft/ft_strlen.c"
-#include "../libft/ft_atoi.c"
-#include "../libft/ft_calloc.c"
-#include "../libft/ft_isdigit.c"
-#include "../libft/ft_itoa_base.c"
-#include "../libft/ft_memcpy.c"
-#include "../libft/ft_strjoin.c"
-#include "../libft/ft_toupper.c"
-#include "../libft/ft_bzero.c"
-#include "../libft/ft_isspace.c"
-#include "../libft/ft_strlcat.c"
-#include "../libft/ft_strlcpy.c"
-#include "../libft/ft_memset.c"
-#include "../libft/ft_isalpha.c"
+// #include "../libft/ft_putchar_fd.c"
+// #include "../libft/ft_putint_fd.c"
+// #include "../libft/ft_putint_base_fd.c"
+// #include "../libft/ft_putstr_fd.c"
+// #include "../libft/ft_putuint_fd.c"
+// #include "../libft/ft_strlen.c"
+// #include "../libft/ft_atoi.c"
+// #include "../libft/ft_calloc.c"
+// #include "../libft/ft_isdigit.c"
+// #include "../libft/ft_itoa_base.c"
+// #include "../libft/ft_memcpy.c"
+// #include "../libft/ft_strjoin.c"
+// #include "../libft/ft_toupper.c"
+// #include "../libft/ft_bzero.c"
+// #include "../libft/ft_isspace.c"
+// #include "../libft/ft_strlcat.c"
+// #include "../libft/ft_strlcpy.c"
+// #include "../libft/ft_memset.c"
+// #include "../libft/ft_isalpha.c"
 
-int			main(void)
-{
-	// int		num = -1;
-	// int		hex = 8123;
-	// // int		num2 = 500;
-	// char	*str = "Hello";
-	// // char	*str2 = "Bye";
-	// char 	c = '9';
-	char	*printstr = "%-6.20d a\n";
-	ft_printf("%p", printstr);
-	printf("%p", printstr);
-	// printf(printstr, 100000);
+// int			main(void)
+// {
+// 	// int		num = -1;
+// 	// int		hex = 8123;
+// 	// // int		num2 = 500;
+// 	// char	*str = "Hello";
+// 	// // char	*str2 = "Bye";
+// 	// char 	c = '9';
+// 	// char	*printstr = "%-6.20d a\n";
+	
+// 	ft_printf("-%05.4d-\n", 123);
+// 	printf("-%05.4d-\n", 123);
 
-	// ft_printf("ft_printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
-	// printf("printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
-	return (0);
-}
+// 	// printf(printstr, 100000);
+
+// 	// ft_printf("ft_printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
+// 	// printf("printf:\nint: %d, string: %s, char: %c, unsigned int: %u, hex: %x, HEX: %X\n", num, str, c, num, hex, hex);
+// 	return (0);
+// }
 
 char		*ft_precision(char *data, t_flags *flags)
 {
@@ -70,17 +72,6 @@ char		*ft_precision(char *data, t_flags *flags)
 	data_return = ft_strjoin(zeroes, data);
 	free(data);
 	return (data_return);
-}
-char		*ft_save_ptr(va_list ap, t_flags *flags)
-{
-	int				n;
-	char			*data;
-
-	n = va_arg (ap, int);
-	n = &n;
-	data = ft_itoa_base(n, 16);
-	data = ft_precision(data, flags);
-	return (data);
 }
 
 char		*ft_save_int(va_list ap, t_flags *flags)
@@ -106,18 +97,21 @@ char		*ft_save_uint(va_list ap, t_flags *flags)
 	return (data);
 }
 
-char		*ft_save_hexlow(va_list ap, t_flags *flags)
+char		*ft_save_ptr(va_list ap, t_flags *flags)
 {
-	int		n;
-	char	*data;
+	unsigned long long	ptr;
+	char				*data;
+	char				*data_temp;
 
-	n = va_arg (ap, int);
-	data = ft_itoa_base(n, 16);
+	ptr = (unsigned long long)va_arg (ap, void *);
+	data_temp = ft_itoa_base(ptr, 16);
+	data = ft_strjoin("0x", data_temp);
+	free(data_temp);
 	data = ft_precision(data, flags);
 	return (data);
 }
 
-char		*ft_save_hexup(va_list ap, t_flags *flags)
+char		*ft_save_hex(va_list ap, t_flags *flags)
 {
 	int		n;
 	char	*data;
@@ -126,12 +120,15 @@ char		*ft_save_hexup(va_list ap, t_flags *flags)
 
 	n = va_arg (ap, int);
 	data = ft_itoa_base(n, 16);
-	strlen = ft_strlen(data);
-	i = 0;
-	while (i < strlen)
+	if (flags->specifier == 'X')
 	{
-		data[i] = ft_toupper(data[i]);
-		i++;
+		strlen = ft_strlen(data);
+		i = 0;
+		while (i < strlen)
+		{
+			data[i] = ft_toupper(data[i]);
+			i++;
+		}
 	}
 	data = ft_precision(data, flags);
 	return (data);
@@ -269,10 +266,8 @@ char		*ft_data(va_list ap, t_flags *flags)
 		data = ft_save_ptr(ap, flags);
 	else if (flags->specifier == 'u')				// Rewrite this function 
 		data = ft_save_uint(ap, flags);
-	else if (flags->specifier == 'x')				// Rewrite this function 
-		data = ft_save_hexlow(ap, flags);
-	else if (flags->specifier == 'X')				// Rewrite this function 
-		data = ft_save_hexup(ap, flags);
+	else if (flags->specifier == 'x' || flags->specifier == 'X')				// Rewrite this function 
+		data = ft_save_hex(ap, flags);
 	return (data);
 }
 

@@ -6,21 +6,21 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 10:04:17 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/25 23:41:48 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/28 15:02:09 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 // #include <stdio.h>
 
-int		ft_absolute(int n)
+long long int	ft_absolute(long long int n)
 {
 	if (n < 0)
 		n = -n;
 	return (n);
 }
 
-int		ft_size(int n, int base)
+int				ft_size(long long int n, int base)
 {
 	int size;
 
@@ -30,7 +30,7 @@ int		ft_size(int n, int base)
 	return (size);
 }
 
-char	*ft_itoa_base(int n, int base)
+char			*ft_itoa_base(long long int n, int base)
 {
 	char	*str;
 	char	*arr;
@@ -49,6 +49,8 @@ char	*ft_itoa_base(int n, int base)
 	str = malloc(sizeof(char) * (size + neg + 1));
 	if (neg)
 		str[0] = '-';
+	if (n == 0)
+		str[0] = '0';
 	while (n)
 	{
 		str[size + neg - 1] = arr[n % base];
@@ -61,10 +63,10 @@ char	*ft_itoa_base(int n, int base)
 // int		main(void)
 // {
 // 	char	*str;
-// 	int		n;
+// 	long long		n;
 
-// 	n = -1120;
-// 	str = ft_itoa_base(n, 10);
+// 	n = 4550373275;
+// 	str = ft_itoa_base(n, 16);
 // 	printf("%s\n", str);
 // 	free(str);
 // 	return (0);

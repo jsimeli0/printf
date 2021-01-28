@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/02 09:14:49 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/25 23:41:13 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/01/28 14:56:10 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
-
-enum			hexcase
-{
-	NONE = 0,
-	UPPER = 0,
-	LOWER = 1
-};
 
 typedef struct		s_list
 {
@@ -65,7 +58,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
-char				*ft_itoa_base(int n, int base);
+char				*ft_itoa_base(long long int n, int base);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
