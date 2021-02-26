@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   ft_itoa_base_main.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/09 16:10:22 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/02/25 16:17:01 by jsimelio      ########   odam.nl         */
+/*   Created: 2020/11/09 10:04:17 by jsimelio      #+#    #+#                 */
+/*   Updated: 2021/02/02 16:27:15 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	ft_putstr_fd(char *s, int fd, int len)
+int		main(void)
 {
-	if (!s)
-		return ;
-	while (len)
-	{
-		ft_putchar_fd(*s, fd);
-		s++;
-		len--;
-	}
+	char	*str;
+	long long		n;
+
+	n = 4550373275;
+	str = ft_itoa_base(n, 16);
+	printf("%s\n", str);
+	free(str);
+	return (0);
 }

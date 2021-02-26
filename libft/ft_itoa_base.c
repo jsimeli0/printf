@@ -6,19 +6,11 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 10:04:17 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/28 15:02:09 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/09 21:04:27 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-// #include <stdio.h>
-
-long long int	ft_absolute(long long int n)
-{
-	if (n < 0)
-		n = -n;
-	return (n);
-}
 
 int				ft_size(long long int n, int base)
 {
@@ -46,7 +38,9 @@ char			*ft_itoa_base(long long int n, int base)
 		neg = 1;
 	n = ft_absolute(n);
 	size = ft_size(n, base);
-	str = malloc(sizeof(char) * (size + neg + 1));
+	str = ft_calloc(size + neg + 1, sizeof(char));
+	if (!str)
+		return (NULL);
 	if (neg)
 		str[0] = '-';
 	if (n == 0)
@@ -59,15 +53,3 @@ char			*ft_itoa_base(long long int n, int base)
 	}
 	return (str);
 }
-
-// int		main(void)
-// {
-// 	char	*str;
-// 	long long		n;
-
-// 	n = 4550373275;
-// 	str = ft_itoa_base(n, 16);
-// 	printf("%s\n", str);
-// 	free(str);
-// 	return (0);
-// }

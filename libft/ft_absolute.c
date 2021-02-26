@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   ft_absolute.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/09 16:10:22 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/02/25 16:17:01 by jsimelio      ########   odam.nl         */
+/*   Created: 2021/02/02 16:25:36 by jsimelio      #+#    #+#                 */
+/*   Updated: 2021/02/15 13:36:39 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putstr_fd(char *s, int fd, int len)
+long long int	ft_absolute(long long int n)
 {
-	if (!s)
-		return ;
-	while (len)
-	{
-		ft_putchar_fd(*s, fd);
-		s++;
-		len--;
-	}
+	if (n < 0)
+		n = -n;
+	return (n);
 }

@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/14 12:52:53 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/22 19:06:34 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/02 16:57:02 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int main(void)
 {
-	printf("%10d\n", 45);
+	printf("%d", 0);
 }

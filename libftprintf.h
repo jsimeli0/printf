@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 17:00:11 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/01/28 15:00:35 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/10 14:51:39 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct	s_flags
 	int			precision;			//  Maximum number of characters to print; for integers, minimum number of digits to print
 	int			zero;			// Left-pads the number with zeroes (0) instead of spaces when padding is specified (see width sub-specifier).
 	int			star;			// The argument list supplies the width specifier, which must precede the actual argument being formatted
+	int			sign;
+	int			character;
 }				t_flags;
 
 char			*ft_precision(char *data, t_flags *flags);
@@ -38,7 +40,7 @@ char			*ft_save_str(va_list ap, t_flags *flags);
 char			*ft_save_char(va_list ap, t_flags *flags);
 void			ft_walk(char **parse, size_t *char_count);
 void			ft_init_flags(t_flags *flags);
-void			ft_parse_flags(char **parse, t_flags *flags);
+void			ft_parse_flags(va_list ap, char **parse, t_flags *flags);
 char			*ft_field(t_flags *flags);
 char			*ft_data(va_list ap, t_flags *flags);
 void			ft_specifier(va_list ap, t_flags *flags, size_t *char_count);

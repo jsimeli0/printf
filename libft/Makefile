@@ -6,12 +6,14 @@
 #    By: jsimelio <jsimelio@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/23 00:04:55 by jsimelio      #+#    #+#                  #
-#    Updated: 2021/01/28 15:01:43 by jsimelio      ########   odam.nl          #
+#    Updated: 2021/02/15 14:00:39 by jsimelio      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
+CC = gcc
 NAME = libft.a
 REG_SRCS = 			ft_atoi.c \
+					ft_absolute.c \
 					ft_bzero.c \
 					ft_calloc.c \
 					ft_isalnum.c \
