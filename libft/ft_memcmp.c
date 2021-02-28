@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/02 15:50:28 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/02 16:47:08 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 23:30:52 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	unsigned char	*s2_copy;
 	int				len;
 
-	s1_copy = (unsigned char*)s1;
-	s2_copy = (unsigned char*)s2;
+	s1_copy = (unsigned char *)s1;
+	s2_copy = (unsigned char *)s2;
 	len = (int)n;
 	while (len)
 	{

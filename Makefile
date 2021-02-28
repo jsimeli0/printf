@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: ssemanco <ssemanco@student.codam.nl>         +#+                      #
+#    By: jsimelio <jsimelio@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2021/02/05 20:21:58 by ssemanco      #+#    #+#                  #
-#    Updated: 2021/02/15 15:55:08 by jsimelio      ########   odam.nl          #
+#    Created: 2021/02/28 23:54:18 by jsimelio      #+#    #+#                  #
+#    Updated: 2021/02/28 23:54:21 by jsimelio      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,23 +16,31 @@ LIBFT = libft.a
 
 HEADER = ft_printf.h
 
-SRC = srcs/ft_printf.c
+SRCS =	ft_printf.c\
+		ft_printf_char_str.c\
+		ft_printf_flags.c\
+		ft_printf_int_uint.c\
+		ft_printf_ptr_hex.c\
+		ft_printf_specifier.c
 
-OBJECTS = ft_printf.o 
+OBJS = 	$(SRCS:%.c=$(S_PATH)%.o)
 
 vpath %.c srcs
 
 all: library $(NAME)
 
-%.o: %.c
-		gcc -Wall -Wextra -Werror -I $(HEADER) -c $<
+library:
+	cd libft && $(MAKE) all
 
-$(NAME): $(OBJECTS)
+$(NAME): $(OBJS)
 	cp libft/$(LIBFT) $(NAME)
 	@ar rcs $(NAME) $^
 
+%.o: %.c
+		gcc -Wall -Wextra -Werror -I. -c $<
+
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJS)
 	cd libft && $(MAKE) clean
 
 fclean: clean
@@ -40,6 +48,3 @@ fclean: clean
 		cd libft && $(MAKE) fclean
 
 re: fclean all
-
-library:
-	cd libft && $(MAKE) all

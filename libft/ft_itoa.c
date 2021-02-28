@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 10:04:17 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/26 00:18:45 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 23:30:10 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_copytmp(char **tmp, int *n, size_t *i)
 	}
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*tmp;
 	char	*tmp2;

@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 09:36:06 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/22 21:23:01 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 23:31:52 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static unsigned int	word_length(const char *str, char c)
 	return (len);
 }
 
-static void			free_strings(char **arr, unsigned int words)
+static void	free_strings(char **arr, unsigned int words)
 {
 	while (words > 0)
 	{
@@ -53,7 +53,7 @@ static void			free_strings(char **arr, unsigned int words)
 	}
 }
 
-static int			assign_strings(char const *s, char c, unsigned int words,
+static int	assign_strings(char const *s, char c, unsigned int words,
 					char **arr)
 {
 	unsigned int	i;
@@ -82,7 +82,7 @@ static int			assign_strings(char const *s, char c, unsigned int words,
 	return (0);
 }
 
-char				**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char			**arr;
 	unsigned int	words;
@@ -91,7 +91,7 @@ char				**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	words = words_found(s, c);
-	arr = malloc(sizeof(char*) * (words + 1));
+	arr = malloc(sizeof(char *) * (words + 1));
 	if (!arr)
 		return (NULL);
 	arr[words] = 0;

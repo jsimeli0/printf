@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/02 11:59:32 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/11/15 21:15:04 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 23:30:33 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*ft_memccpy(void *dst, const void *src,
 	unsigned char	*src2;
 	unsigned char	c2;
 
-	src2 = (unsigned char*)src;
-	dst2 = (unsigned char*)dst;
+	src2 = (unsigned char *)src;
+	dst2 = (unsigned char *)dst;
 	c2 = (unsigned char)c;
 	while (n > 0)
 	{

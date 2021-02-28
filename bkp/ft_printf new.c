@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/02/28 22:39:57 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 21:53:13 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 
 void	ft_walk(char **parse, size_t *char_count)
 {
-	while (**parse && **parse != '%')
+	while (**parse)
 	{
-		ft_putchar_fd(**parse, 1);
-		(*parse)++;
-		(*char_count)++;
+		if (**parse != '%')
+		{
+			ft_putchar_fd(**parse, 1);
+			(*char_count)++;
+			(*parse)++;
+		}
+		else
+		{
+			(*parse)++;
+			break ;
+		}
 	}
-}
-
-void	ft_putsign(char *field)
-{
-	*field = '-';
-	field++;
-	while (*field != '-')
-		field++;
-	*field = '0';
 }
 
 int	ft_printf(const char *str, ...)
@@ -48,8 +47,6 @@ int	ft_printf(const char *str, ...)
 		ft_walk(&parse, &char_count);
 		if (*parse != '%')
 			break ;
-		parse++;
-		ft_init_flags(&flags);
 		ft_parse_flags(ap, &parse, &flags);
 		ft_specifier(ap, &flags, &char_count);
 	}

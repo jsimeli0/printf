@@ -6,15 +6,15 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/09 16:10:22 by jsimelio      #+#    #+#                 */
-/*   Updated: 2020/12/07 18:17:37 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 23:31:16 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
-	ssize_t i;
+	ssize_t	i;
 
 	i = write(fd, &c, sizeof(char));
 	return (i);
