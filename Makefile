@@ -6,11 +6,11 @@
 #    By: jsimelio <jsimelio@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/28 23:54:18 by jsimelio      #+#    #+#                  #
-#    Updated: 2021/03/01 22:49:23 by jsimelio      ########   odam.nl          #
+#    Updated: 2021/03/02 16:11:46 by jsimelio      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf.a
+NAME = libftprintf.a
 
 LIBFT = libft.a
 

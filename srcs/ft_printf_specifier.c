@@ -6,11 +6,11 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/03/02 13:09:47 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/03/02 21:48:20 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 char	*ft_precision(char *data, t_flags *flags)
 {
@@ -22,7 +22,8 @@ char	*ft_precision(char *data, t_flags *flags)
 	if (flags->precision == -1)
 		return (data);
 	strlen = ft_strlen(data);
-	if (flags->precision <= strlen && flags->precision > 0)
+	// if (flags->precision <= strlen && flags->precision > 0)
+	if (flags->precision <= strlen)	
 	{
 		if (flags->specifier == 's')
 			data[flags->precision] = 0;
@@ -31,7 +32,8 @@ char	*ft_precision(char *data, t_flags *flags)
 	if (flags->specifier == 's')
 		return (data);
 	i = 0;
-	zeroes = ft_calloc(flags->precision - strlen, sizeof(char));
+	// This next line can become negative
+	zeroes = ft_calloc(flags->precision - strlen + 1, sizeof(char));
 	while (i < flags->precision - strlen)
 	{
 		zeroes[i] = '0';
