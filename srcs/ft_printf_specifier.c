@@ -6,7 +6,7 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/03/02 23:03:49 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/03/02 23:42:29 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ char	*ft_precision(char *data, t_flags *flags)
 		return (data);
 	i = 0;
 	zeroes = ft_calloc(flags->precision - strlen + 1, sizeof(char));
-	while (i < flags->precision - strlen)
-	{
-		zeroes[i] = '0';
-		i++;
-	}
+	ft_memset(zeroes, '0', flags->precision - strlen);
 	data_return = ft_strjoin(zeroes, data);
 	free(data);
 	return (data_return);
