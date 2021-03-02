@@ -6,11 +6,11 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/02/28 21:16:04 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/03/01 22:32:50 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libftprintf.h"
+#include "../includes/ft_printf.h"
 
 char	*ft_save_ptr(va_list ap, t_flags *flags)
 {
@@ -19,10 +19,15 @@ char	*ft_save_ptr(va_list ap, t_flags *flags)
 	char	*data_temp;
 
 	ptr = (unsigned long long)va_arg(ap, void *);
-	data_temp = ft_itoa_base(ptr, 16);
-	data = ft_strjoin("0x", data_temp);
-	free(data_temp);
-	data = ft_precision(data, flags);
+	if (ptr == 0 && flags->precision == 0)
+		data = ft_strjoin("0x", "");
+	else
+	{
+		data_temp = ft_itoa_base(ptr, 16);
+		data = ft_strjoin("0x", data_temp);
+		free(data_temp);
+		data = ft_precision(data, flags);
+	}
 	return (data);
 }
 

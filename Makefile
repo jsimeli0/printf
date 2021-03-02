@@ -6,11 +6,11 @@
 #    By: jsimelio <jsimelio@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/28 23:54:18 by jsimelio      #+#    #+#                  #
-#    Updated: 2021/02/28 23:54:21 by jsimelio      ########   odam.nl          #
+#    Updated: 2021/03/01 22:49:23 by jsimelio      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = ft_printf.a
 
 LIBFT = libft.a
 
@@ -37,7 +37,7 @@ $(NAME): $(OBJS)
 	@ar rcs $(NAME) $^
 
 %.o: %.c
-		gcc -Wall -Wextra -Werror -I. -c $<
+		gcc -Wall -Wextra -Werror -I includes -c $<
 
 clean:
 	rm -rf $(OBJS)

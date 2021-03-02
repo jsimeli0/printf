@@ -6,11 +6,11 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/03/02 13:07:49 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/02/28 21:38:02 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../includes/libftprintf.h"
 
 void	ft_init_flags(t_flags *flags)
 {
@@ -24,8 +24,42 @@ void	ft_init_flags(t_flags *flags)
 	flags->character = -100;
 }
 
-void	ft_parse_flags_precision(va_list ap, char **parse, t_flags *flags)
+void	ft_parse_flags(va_list ap, char **parse, t_flags *flags)
 {
+	int	width;
+
+	(*parse)++;
+	ft_init_flags(flags);
+	while (!ft_isalpha(**parse) && **parse != '.' && **parse != '%')
+	{
+		if (**parse == '0' && !flags->dash)
+		{
+			flags->zero = 1;
+			(*parse)++;
+		}
+		if (**parse == '*')
+		{
+			flags->width = va_arg(ap, int);
+			if (flags->width < 0)
+			{
+				flags->dash = 1;
+				flags->zero = 0;
+			}
+			flags->width = ft_absolute(flags->width);
+			(*parse)++;
+		}
+		if (**parse == '-')
+		{
+			flags->dash = 1;
+			flags->zero = 0;
+			(*parse)++;
+		}
+		width = ft_atoi(*parse);
+		if (width)
+			flags->width = width;
+		while (ft_isdigit(**parse))
+			(*parse)++;
+	}
 	if (**parse == '.')
 	{
 		(*parse)++;
@@ -43,62 +77,11 @@ void	ft_parse_flags_precision(va_list ap, char **parse, t_flags *flags)
 				(*parse)++;
 		}
 	}
-	if (flags->precision < 0)
-		flags->precision = -1;
-	if (flags->precision == 0)
-		flags->zero = 0;
-}
-
-void	ft_set_width(char **parse, t_flags *flags)
-{
-	int	width;
-
-	width = ft_atoi(*parse);
-	if (width)
-		flags->width = width;
-	while (ft_isdigit(**parse))
-		(*parse)++;
-}
-
-void	ft_parse_flags_width(va_list ap, char **parse, t_flags *flags)
-{
-	while (!ft_isalpha(**parse) && **parse != '.' && **parse != '%')
-	{
-		if (!ft_isdigit(**parse) || **parse == '0')
-		{
-			if (**parse == '0' && !flags->dash)
-				flags->zero = 1;
-			else if (**parse == '*')
-			{
-				flags->width = va_arg(ap, int);
-				if (flags->width < 0)
-				{
-					flags->dash = 1;
-					flags->zero = 0;
-				}
-				flags->width = ft_absolute(flags->width);
-			}
-			else if (**parse == '-')
-			{
-				flags->dash = 1;
-				flags->zero = 0;
-			}
-			(*parse)++;
-		}	
-		ft_set_width(parse, flags);
-	}
-}
-
-void	ft_parse_flags(va_list ap, char **parse, t_flags *flags)
-{
-	ft_parse_flags_width(ap, parse, flags);
-	ft_parse_flags_precision(ap, parse, flags);
-	flags->specifier = **parse;
 	if (flags->width < flags->precision && flags->specifier != 's')
 		flags->width = 0;
-	if (flags->precision > 0 && (flags->specifier == 'd'
-			|| flags->specifier == 'i' || flags->specifier == 'u'
-			|| flags->specifier == 'X' || flags->specifier == 'x'))
+	if (flags->precision > 0 && (flags->specifier == 'd' \
+	 || flags->specifier == 'i' || flags->specifier == 'u' \
+	 || flags->specifier == 'X' || flags->specifier == 'x'))
 		flags->zero = 0;
 	(*parse)++;
 }

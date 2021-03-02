@@ -6,11 +6,11 @@
 /*   By: jsimelio <jsimelio@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/30 16:57:34 by jsimelio      #+#    #+#                 */
-/*   Updated: 2021/02/28 23:21:35 by jsimelio      ########   odam.nl         */
+/*   Updated: 2021/03/02 13:09:47 by jsimelio      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libftprintf.h"
+#include "../includes/ft_printf.h"
 
 char	*ft_precision(char *data, t_flags *flags)
 {
@@ -19,8 +19,10 @@ char	*ft_precision(char *data, t_flags *flags)
 	char	*zeroes;
 	char	*data_return;
 
+	if (flags->precision == -1)
+		return (data);
 	strlen = ft_strlen(data);
-	if (flags->precision <= strlen)
+	if (flags->precision <= strlen && flags->precision > 0)
 	{
 		if (flags->specifier == 's')
 			data[flags->precision] = 0;
